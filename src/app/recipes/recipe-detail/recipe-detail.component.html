@@ -1,0 +1,62 @@
+<div class="row">
+  <div class="col-xs-12">
+    <img src="{{selectedRecipe?.imagePath}}" alt="" class="img-responsive">
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    <h1>{{selectedRecipe?.name}}</h1>
+  </div>
+  <div class="col-xs-12">
+    <button class="btn btn-success">To Shopping List</button>
+    <button class="btn btn-primary">Edit</button>
+    <button class="btn btn-danger">Delete</button>
+  </div>
+</div>
+<hr>
+<div class="row">
+  <div class="col-xs-12">
+    <p>{{selectedRecipe?.description}}</p>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12">
+    Ingredients
+  </div>
+</div>
+<form (ngSubmit)="addRecipe(f)" #f=ngForm>
+    Recipe Name: <input type="text" #name =ngModel ngModel name="recName" required minlength ="3" class="form-control"/>
+    <div *ngIf=name.invalid>
+    <div *ngIf=name.errors.required style = "color : red">
+        Name cannot be blank!
+    </div>
+    <div *ngIf=name.errors.minlength style="color : red">
+       Minimum length should be 3!
+    </div>
+    </div>
+    Email: <input type="text" required email #email=ngModel ngModel name="email" class="form-control"/>
+    <div *ngIf=email.invalid>
+    <div *ngIf=email.errors.required style = "color : red">
+        Email cannot be blank!
+    </div>
+    <div *ngIf=email.errors.email style="color : red">
+        Email is incorrect!
+    </div>
+    </div>
+    Price: <input type="number" #price=ngModel ngModel name="price" required class="form-control"/>
+    <div *ngIf=!price.valid style = "color : red">
+        Price cannot be blank!
+    </div>
+     Ingredient: <input type="text" #ing=ngModel ngModel name="ing" required class="form-control"/>
+     <div *ngIf=!ing.valid style = "color : red">
+        Ingredient cannot be blank!
+    </div>
+    <br> <button type = "submit" [disabled]="!f.valid" class="btn btn-primary">Submit</button>
+</form>
+<br>
+<button (click)="loadRecipes()" class="btn btn-primary">Load Recipes</button>
+<ul>
+    <li *ngFor="let ud of loadedPosts">
+       {{ ud.recName }}, {{ ud.email }}, {{ ud.price }}, {{ ud.ing }}
+    </li>
+        </ul>
